@@ -5,6 +5,7 @@
 
 const express = require("express");
 const mongoose = require('mongoose');
+const { title } = require("process");
 const { stringify } = require("querystring");
 const { v4: uuidv4 } = require('uuid');
 
@@ -50,8 +51,10 @@ app.get("/api/products", async(req,res)=>{
     id: uuidv4(),
     title: req.body,
     price: req.body
+    
    })
-
-   await newProduct.save()
-    res.status(200).send(newProduct)
+    console.log(req.body,title)
+    console.log(req.body,price)
+   await newProduct.save();
+    res.status(200).send(newProduct);
 })
