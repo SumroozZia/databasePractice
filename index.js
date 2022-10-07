@@ -1,5 +1,11 @@
+// create server
+/// connect database 
+/// create sechme 
+
+
 const express = require("express");
 const mongoose = require('mongoose');
+const { stringify } = require("querystring");
 
 const app = express();
 
@@ -24,6 +30,15 @@ app.listen(port,async()=>{
     console.log(`Server is running at http://localhost:${port}`)
    await databaseConnection();
 })
+
+const productScheme = new mongoose.Schema({
+    id : String,
+    name: String,
+    price: Number
+});
+
+const productModel = mongoose.model("Products",productScheme)
+
 app.get("/",(req,res)=>{
     res.send("Wel to Home page")
 })
