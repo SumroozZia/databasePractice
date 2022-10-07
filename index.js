@@ -6,11 +6,13 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const { stringify } = require("querystring");
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
 const port = 8001;
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 // Connection to database
 mongoose.connect('mongodb://localhost:27017/test');
@@ -43,6 +45,13 @@ app.get("/",(req,res)=>{
     res.send("Wel to Home page")
 })
 
-app.get("/api/products",(req,res)=>{
-    res.send(" Products are here")
+app.get("/api/products", async(req,res)=>{
+   const newProduct = productModel({
+    id: uuidv4(),
+    title: req.body,
+    price: req.body
+   })
+
+   await newProduct.save()
+    res.status(200).send(newProduct)
 })
